@@ -1,7 +1,7 @@
 
 
 class Enemy:
-    def __init__(self,_hp:int,x_pos:int,y_pos:int,_index:int) -> None:
+    def __init__(self,_hp:int,x_pos:int,y_pos:int,_index:int = None) -> None:
         self.hp = _hp
         self.pos = (x_pos,y_pos)
         self.index = _index

@@ -33,7 +33,7 @@ def train(model,env,total_timesteps, save_path,log_path,test_times,testonly =Fal
                 
                 step +=1
                 if dones :
-                    print(step/6)
+                    print(step)
                     break
                 elif step >= 10000:
                     

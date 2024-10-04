@@ -5,9 +5,9 @@ from sb3_contrib import RecurrentPPO
 
 import train
 
-
+from Envs.navi_Env import navi_Env
 #from Envs.AOE_Env import AOE_Env
-#from Envs.shoot_Env import shoot_Env
+from Envs.attack_Env import attack_Env
 
 def Moduletrain(save_path,log_path,env,times = 2000000,testonly =False,re_tarin_model =None):
     model = None
@@ -33,16 +33,17 @@ def Moduletrain(save_path,log_path,env,times = 2000000,testonly =False,re_tarin_
     train.train(model,env,times,save_path,log_path,100,testonly)
 
 
-def train_aoe():
-    save_path = 'trained_modules/AOE_Module/normal_best'
-    log_path = 'logs/AOE_log'
-    env = make_vec_env("AOE_Env-v0",monitor_dir=log_path)
-    Moduletrain(save_path,log_path,env,2000000)
+def train_navi():
+    save_path = 'trained_modules/navie/normal_best'
+    log_path = 'logs/navi_log'
+    env = make_vec_env("navi_Env-v0",monitor_dir=log_path)
+    Moduletrain(save_path,log_path,env,1000000,)
 
-def train_shoot():
-    save_path = 'trained_modules/shoot_Module/normal_best02'
-    log_path = 'logs/shoot_log'
-    env = make_vec_env("shoot_Env-v0",monitor_dir=log_path)
-    Moduletrain(save_path,log_path,env,1000000)
+def train_attack():
+    save_path = 'trained_modules/attack/normal_best'
+    log_path = 'logs/attack_log'
+    env = make_vec_env("attack_Env-v0",monitor_dir=log_path)
+    Moduletrain(save_path,log_path,env,3000000,)
 
-train_shoot()
+
+train_attack()

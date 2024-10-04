@@ -20,11 +20,11 @@ class navi_Env(gym.Env):
         self.height = height
 
         self.agent_pos = self.random_Agent_pos().copy()
-        self.goal=self.get_goal
+        self.goal=self.get_goal()
         self.arrive =False
 
         self.curr_dis = 10000
-
+        
         self.observation_space = spaces.Dict({
             "agent": spaces.Box(0,15,(2 ,),np.int32),
             "goal": spaces.Box(0,15,(2 ,),np.int32),
@@ -37,7 +37,7 @@ class navi_Env(gym.Env):
     def reset(self,seed=None, options=None):
         
         self.agent_pos = self.random_Agent_pos().copy()
-        self.goal=self.get_goal
+        self.goal=self.get_goal()
         self.arrive =False
 
         return self._get_obs() , self._get_info()
@@ -58,8 +58,12 @@ class navi_Env(gym.Env):
         }
     
     def step(self, action):
-
         reward = -1
+        new_dis = self.get_distance(self.agent_pos,self.goal)
+        if new_dis < self.curr_dis:
+            reward +=1
+            self.curr_dis = new_dis
+        
         terminated = False
         next_x= self.agent_pos[0]
         next_y =self.agent_pos[1]
@@ -74,6 +78,7 @@ class navi_Env(gym.Env):
         
         if(next_x == self.goal[0]and next_y == self.goal[1]):
             reward += 50
+            self._update_agent_position(next_x,next_y)
             self.arrive = True
             terminated = True
         elif(next_x < 0 or next_x >=self.width or next_y < 0 or next_y >=self.height):
